@@ -296,6 +296,30 @@ QTextEdit{
            </spacer>
           </item>
           <item>
+           <widget class="QLabel" name="label">
+            <property name="text">
+             <string>源码编码格式：</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QComboBox" name="SrcCode">
+            <property name="currentIndex">
+             <number>1</number>
+            </property>
+            <item>
+             <property name="text">
+              <string>GBK</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>UTF-8</string>
+             </property>
+            </item>
+           </widget>
+          </item>
+          <item>
            <widget class="QPushButton" name="SearchTsString">
             <property name="minimumSize">
              <size>
@@ -532,7 +556,7 @@ QTextEdit{
      <x>0</x>
      <y>0</y>
      <width>1280</width>
-     <height>22</height>
+     <height>23</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
@@ -544,11 +568,15 @@ QTextEdit{
       <string>Open</string>
      </property>
      <addaction name="actionTranslation_File_ts"/>
+     <addaction name="actionExecl_File_xlsx"/>
     </widget>
     <addaction name="menuOpen"/>
     <addaction name="actionSave"/>
     <addaction name="actionSave_As"/>
+    <addaction name="actionSave_xlsx"/>
+    <addaction name="actionSave_csv"/>
     <addaction name="actionUpdate_ts"/>
+    <addaction name="actionUpdate_xlsx"/>
     <addaction name="actionRelease_qm"/>
     <addaction name="actionExit_2"/>
    </widget>
@@ -603,6 +631,26 @@ QTextEdit{
   <action name="actionExit_2">
    <property name="text">
     <string>Exit</string>
+   </property>
+  </action>
+  <action name="actionExecl_File_xlsx">
+   <property name="text">
+    <string>Execl File (*xlsx)</string>
+   </property>
+  </action>
+  <action name="actionUpdate_xlsx">
+   <property name="text">
+    <string>Update *.xlsx</string>
+   </property>
+  </action>
+  <action name="actionSave_xlsx">
+   <property name="text">
+    <string>Save *xlsx</string>
+   </property>
+  </action>
+  <action name="actionSave_csv">
+   <property name="text">
+    <string>Save *.csv</string>
    </property>
   </action>
  </widget>

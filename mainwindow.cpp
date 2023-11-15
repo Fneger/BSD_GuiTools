@@ -82,13 +82,14 @@ void MainWindow::slot_menuFileTriggered(QAction* pAct)
 {
     if(pAct == ui->actionUpdate_ts) //更新ts文件
     {
+        m_translator->setCode(ui->SrcCode->currentText());
         if(m_translator->tsField().srcPath.length() <= 0)
         {
             QString path = QFileDialog::getExistingDirectory(this,tr("Source Code Path"),m_settings->value("TsSettings/SrcPath",".").toString());
             if(path.length() > 0)
             {
                 m_settings->setValue("TsSettings/SrcPath",path);
-                m_translator->startParseSrc(path);
+                m_translator->startParseSrc(path, CTranslator::DoParseSrc_E);
             }
         }
         else
@@ -109,6 +110,61 @@ void MainWindow::slot_menuFileTriggered(QAction* pAct)
                 updateTsList(m_translator->tsField().tsPairs);
             }
         }
+    }
+    else if(pAct == ui->actionUpdate_xlsx) //更新xlsx文件
+    {
+        m_translator->setCode(ui->SrcCode->currentText());
+        if(m_translator->tsField().srcPath.length() <= 0)
+        {
+            QString path = QFileDialog::getExistingDirectory(this,tr("Source Code Path"),m_settings->value("TsSettings/XslxSrcPath",".").toString());
+            if(path.length() > 0)
+            {
+                m_settings->setValue("TsSettings/XslxSrcPath",path);
+                m_translator->startParseSrc(path, CTranslator::DoParseSrc2Xlsx_E);
+            }
+        }
+        else
+        {
+            m_translator->updateXlsxField();
+        }
+    }
+    else if(pAct == ui->actionExecl_File_xlsx) { //打开excel xlsx文件
+        QString fileName = QFileDialog::getOpenFileName(this,tr("Open excel *.xlsx file"),m_settings->value("TsSettings/XlsxFileOpenPath",".").toString(),"*.xlsx");
+        if(fileName.length() > 0)
+        {
+            QFileInfo fileInfo(fileName);
+            m_settings->setValue("TsSettings/XlsxFileOpenPath",fileInfo.absolutePath());
+            if(m_translator->openXlsxFile(fileName))
+            {
+                ui->TranslationFileLabel->setText(fileName);
+            }
+        }
+    }
+    else if(pAct == ui->actionSave_xlsx) //保存xlsx文件
+    {
+        bool res = false;
+        QString fileName = QFileDialog::getSaveFileName(this,tr("Save as xlsx file"),m_settings->value("TsSettings/XlsxFileSaveAsPath",".").toString(),"*.xlsx");
+        if(fileName.length() >= 0)
+        {
+            QFileInfo fileInfo(fileName);
+            m_settings->setValue("TsSettings/XlsxFileSaveAsPath",fileInfo.absolutePath());
+            res = m_translator->saveXlsxFile(fileName);
+        }
+        if(res)
+        ui->TranslationFileLabel->setText(m_translator->tsFileName());
+    }
+    else if(pAct == ui->actionSave_csv) //保存csv文件
+    {
+        bool res = false;
+        QString fileName = QFileDialog::getSaveFileName(this,tr("Save as csv file"),m_settings->value("TsSettings/CsvFileSaveAsPath",".").toString(),"*.csv");
+        if(fileName.length() >= 0)
+        {
+            QFileInfo fileInfo(fileName);
+            m_settings->setValue("TsSettings/CsvFileSaveAsPath",fileInfo.absolutePath());
+            res = m_translator->saveCsvFile(fileName);
+        }
+        if(res)
+        ui->TranslationFileLabel->setText(m_translator->tsFileName());
     }
     else if(pAct == ui->actionSave) //保存ts文件
     {
